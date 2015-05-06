@@ -8,7 +8,7 @@ const CommentForm = React.createClass({
         if (!text || !author) {
             return;
         }
-        // TODO: send request to the server
+        this.props.onCommentSubmit({author, text});
         React.findDOMNode(this.refs.author).value = '';
         React.findDOMNode(this.refs.text).value = '';
         return;
