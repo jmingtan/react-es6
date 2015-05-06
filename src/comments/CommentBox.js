@@ -4,10 +4,7 @@ const CommentList = require('./CommentList');
 const CommentForm = require('./CommentForm');
 
 const CommentBox = React.createClass({
-    getInitialState() {
-        return {data: []};
-    },
-    componentDidMount() {
+    loadCommentsFromServer() {
         $.ajax({
             url: this.props.url,
             dataType: 'json',
@@ -19,6 +16,13 @@ const CommentBox = React.createClass({
                 console.error(this.props.url, status, err.toString());
             }
         });
+    },
+    getInitialState() {
+        return {data: []};
+    },
+    componentDidMount() {
+        this.loadCommentsFromServer();
+        setInterval(this.loadCommentsFromServer, this.props.pollInterval);
     },
     render() {
         return (
